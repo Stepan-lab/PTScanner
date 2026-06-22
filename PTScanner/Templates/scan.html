@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.scanname }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto 30px;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        select, input {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .data-container {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .data-item {
+            margin-bottom: 15px;
+        }
+        .data-item label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .data-item pre {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        .required:after {
+            content: " *";
+            color: red;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Форма для ввода данных -->
+    <form id="scanForm">
+        <p><strong class="required">Попытка пробросить шелл:</strong></p>
+        <input type="radio" id="shell-yes" name="shell" value="yes" required>
+        <label for="shell-yes">Да</label>
+        <input type="radio" id="shell-no" name="shell" value="no" checked required>
+        <label for="shell-no">Нет</label>
+
+        <p><strong class="required">Глубина сканирования:</strong></p>
+        <select name="depth" id="depth" required>
+            <option value="" disabled selected>Выберите глубину</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6 (полная)</option>
+        </select>
+
+        <p><strong class="required">Операционная система:</strong></p>
+        <select name="os" id="os" required>
+            <option value="" disabled selected>Выберите ОС</option>
+            <option value="linux">Linux</option>
+            <option value="windows">Windows</option>
+        </select>
+
+        <p><strong class="required">Количество потоков:</strong></p>
+        <input type="number" name="threads" id="threads" min="1" step="1" required
+               placeholder="Укажите количество потоков">
+
+        <p><strong class="required">Название файла для сохранения:</strong></p>
+        <input type="text" name="filename" id="filename" required
+               placeholder="Введите название файла">
+
+        <button type="submit">Отправить</button>
+    </form>
+
+    <div class="data-container">
+        <h1>Данные запроса</h1>
+
+        <div class="data-item">
+            <label>Имя сканирования:</label>
+            <pre id="sn">{{ data.scanname }}</pre>
+        </div>
+
+        <div class="data-item">
+            <label>URL:</label>
+            <pre>{{ data.url }}</pre>
+        </div>
+
+        <div class="data-item">
+            <label>Метод:</label>
+            <pre>{{ data.method }}</pre>
+        </div>
+
+        <div class="data-item">
+            <label>Заголовки:</label>
+            <pre>{{ data.headers | tojson(indent=4) }}</pre>
+        </div>
+
+        <div class="data-item">
+            <label>Куки:</label>
+            <pre>{{ data.cookies | tojson(indent=4) }}</pre>
+        </div>
+
+        <div class="data-item">
+            <label>Тело запроса:</label>
+            <pre>{{ data.payload }}</pre>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('scanForm').addEventListener('submit', function(event) {
+            let isValid = true;
+
+            // Проверка всех обязательных полей
+            const requiredFields = document.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (!field.value && !(field.type === 'radio' && document.querySelector('input[name="' + field.name + '"]:checked'))) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+
+                    // Создаем сообщение об ошибке, если его еще нет
+                    if (!field.nextElementSibling || !field.nextElementSibling.classList.contains('error-message')) {
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'error-message';
+                        errorMsg.textContent = 'Это поле обязательно для заполнения';
+                        field.parentNode.insertBefore(errorMsg, field.nextSibling);
+                    }
+                } else {
+                    field.style.borderColor = '';
+                    const errorMsg = field.nextElementSibling;
+                    if (errorMsg && errorMsg.classList.contains('error-message')) {
+                        errorMsg.remove();
+                    }
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault();
+                alert('Пожалуйста, заполните все обязательные поля!');
+            }
+        });
+    </script>
+</body>
+</html>

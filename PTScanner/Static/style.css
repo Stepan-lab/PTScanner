@@ -1,0 +1,29 @@
+body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+
+.container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 100%; max-width: 500px; }
+
+h1 { text-align: center; margin-bottom: 20px; }
+
+.form-group { margin-bottom: 15px; }
+
+label { display: block; margin-bottom: 5px; font-weight: bold; }
+
+select, input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
+
+textarea { resize: vertical; }
+
+button { padding: 10px; background-color: #28a745; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+
+button:hover { background-color: #218838; }
+
+.response-container { margin-top: 20px; padding: 10px; background-color: #f8f9fa; border: 1px solid #ccc; border-radius: 4px; display: none; }
+
+.header-input { display: flex; gap: 10px; margin-bottom: 10px; }
+
+.header-input input { flex: 1; }
+
+.remove-header { background-color: #dc3545; }
+
+.remove-header:hover { background-color: #c82333; }
+
+#addHeader { width: 100%; margin-top: 10px; } .remove-cookie { background-color: #dc3545 } .remove-cookie:hover { background-color: #c82333; } 

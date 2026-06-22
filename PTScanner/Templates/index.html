@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройка сканирования</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Введите параметры запроса</h1>
+        <form id="requestForm">
+            <div class="form-group">
+                <label for="method">Метод:</label>
+                <select id="method" name="method" required>
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="url">URL:</label>
+                <input type="url" id="url" name="url" placeholder="https://example.com" required>
+                <small>При использовании метода GET полезная нагрузка вставляется в URL.</small>
+            </div>
+            <div class="form-group">
+                <label for="scanname">Название сканирования:</label>
+                <input type="text" id="scanname" name="scanname" placeholder="название" required>
+            </div>
+            <div class="form-group">
+                <label>Заголовки:</label>
+                <div id="headersContainer">
+                    <div class="header-input">
+                        <input type="text" placeholder="Заголовок" class="header-name">
+                        <input type="text" placeholder="Значение" class="header-value">
+                        <button type="button" class="remove-header">Удалить</button>
+                    </div>
+                </div>
+                <button type="button" id="addHeader">Добавить заголовок</button>
+            </div>
+            <div class="form-group">
+                <label>Куки:</label>
+                <div id="cookiesContainer">
+                    <div class="cookie-input">
+                        <input type="text" placeholder="Куки" class="cookie-name">
+                        <input type="text" placeholder="Значение" class="cookie-value">
+                        <button type="button" class="remove-cookie">Удалить</button>
+                    </div>
+                </div>
+                <button type="button" id="addCookie">Добавить куки</button>
+            </div>
+            <div class="form-group">
+                <label for="payload">Тело запроса:</label>
+                <textarea id="payload" name="payload" placeholder='Тело запроса' rows="5"></textarea>
+            </div>
+            <button type="submit">Отправить</button>
+        </form>
+        <div id="response" class="response-container"></div>
+    </div>
+    <script src="scripts/WorkWithHeaders.js"></script>
+    <script src="scripts/MethodChecker.js"></script>
+    <script src="scripts/PostData.js"></script>
+    <script src="scripts/WorkWithCookies.js"></script>
+</body>
+</html>
