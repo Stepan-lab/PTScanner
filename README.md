@@ -18,7 +18,7 @@ pip install flask requests
 ```bash
 python app.py
 ```
-Откройте `http://localhost:5000`
+Откройте предложенынй веб-интерфейс
 
 ## Инструкция
 
